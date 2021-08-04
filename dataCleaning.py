@@ -16,6 +16,6 @@ df_train.ProdYear = 2021 - df_train.ProdYear
 df_train.Mileage = df_train.Mileage.replace(' km', '', regex=True).astype(int)
 df_train = df_train.drop('ID', axis=1)
 
-print(df_train.head(30))
+
 
 

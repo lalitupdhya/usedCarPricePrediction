@@ -73,3 +73,4 @@ usedCardata/
 *.hdf5
 *.csv
 *.pkl
+test.py
