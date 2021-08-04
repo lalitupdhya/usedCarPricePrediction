@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from sklearn import impute
 import re
 
 path_train = './usedCarData/train.csv'
