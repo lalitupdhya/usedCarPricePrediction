@@ -35,7 +35,7 @@ df_train['Turbo'] = np.where(condition, 1, 0)
 
 df_train.EngineVolume = df_train.EngineVolume.replace(' Turbo','', regex=True).astype('float')
 
-
+# Iterative imputing on column Levy
 estimators = [
     linear_model.BayesianRidge(),
     tree.DecisionTreeRegressor(max_features='sqrt', random_state=0),
@@ -46,6 +46,7 @@ estimators = [
 score_iterative_imputer =pd.DataFrame()
 br_estimator = linear_model.BayesianRidge()
 
+# columns used for iterative Imputation
 columnX = ['Levy', 'ProdYear', 'EngineVolume', 'Turbo', 'Mileage', 'Cylinders',
           'Airbags','Turbo']
 columnY = ['Price']
@@ -58,7 +59,9 @@ for estimator_imputer in estimators:
                                                                                 X = df_train[columnX], 
                                                                                 y = df_train[columnY],
                                                                                 scoring = 'neg_mean_squared_log_error',
-                                                                                cv=5)   
+                                                                                cv=5)
+
+ 
 
 
 

@@ -74,4 +74,3 @@ usedCardata/
 *.csv
 *.pkl
 test.py
-*.ipynb
