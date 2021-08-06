@@ -1,11 +1,14 @@
 import os
 from sklearn import preprocessing
 from sklearn import ensemble
+from sklearn import metrics
 import pandas as pd
 import numpy as np
+from . import dispatcher
 
 TRAINING_DATA = os.environ["TRAINING_DATA"]
 FOLD = int(os.environ["FOLD"])
+MODEL = os.environ["MODEL"]
 FOLD_MAPPING = {
     0: [1,2,3,4],
     1: [0,2,3,4],
@@ -40,8 +43,8 @@ if __name__ == "__main__":
 
     #data is ready to train
 
-    reg = ensemble.RandomForestRegressor(n_estimators=200, n_jobs=-1, verbose = 2)
+    reg = dispatcher.MODELS[MODEL]
     reg.fit(train_df, y_train)
 
     preds = reg.predict(valid_df)
-    print(preds[:10])
+    print(metrics.mean_squared_log_error(y_valid, preds))
