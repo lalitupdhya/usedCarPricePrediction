@@ -21,6 +21,9 @@ if __name__ == "__main__":
 
     df = pd.read_csv(TRAINING_DATA)
 
+    df.Price = np.log1p(df.Price)
+    df.Mileage = np.log1p(df.Mileage)
+
     train_df = df[df.kfold.isin(FOLD_MAPPING[FOLD])]
     valid_df = df[df.kfold==FOLD]
 
@@ -47,4 +50,6 @@ if __name__ == "__main__":
     reg.fit(train_df, y_train)
 
     preds = reg.predict(valid_df)
+    preds = np.exp(preds)
+    y_valid = np.exp(y_valid)
     print(metrics.mean_squared_log_error(y_valid, preds))
