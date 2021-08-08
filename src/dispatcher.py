@@ -5,5 +5,5 @@ MODELS = {
                                                         max_features='log2',
                                                         max_leaf_nodes=500,
                                                         n_jobs=-1, verbose=2, random_state=142),
-    "extra_trees" : ensemble.ExtraTreesRegressor(n_estimators=600, n_jobs=-1, verbose=2)
+    "extra_trees" : ensemble.ExtraTreesRegressor(n_estimators=600, n_jobs=-1)
 }

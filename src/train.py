@@ -7,8 +7,10 @@ import numpy as np
 from . import dispatcher
 
 TRAINING_DATA = os.environ["TRAINING_DATA"]
+TEST_DATA = os.environ["TEST_DATA"]
 FOLD = int(os.environ["FOLD"])
 MODEL = os.environ["MODEL"]
+
 FOLD_MAPPING = {
     0: [1,2,3,4],
     1: [0,2,3,4],
@@ -20,6 +22,7 @@ FOLD_MAPPING = {
 if __name__ == "__main__":
 
     df = pd.read_csv(TRAINING_DATA)
+    df_test = pd.read_csv(TEST_DATA)
 
     df.Price = np.log1p(df.Price)
     df.Mileage = np.log1p(df.Mileage)
@@ -35,14 +38,15 @@ if __name__ == "__main__":
 
     valid_df = valid_df[train_df.columns]
 
-    label_encoders = []
+    label_encoders = {}
     for col in train_df.columns:
         lbl = preprocessing.LabelEncoder()
-        lbl.fit(train_df[col].values.tolist() + valid_df[col].values.tolist())
+        lbl.fit(train_df[col].values.tolist() + valid_df[col].values.tolist() +
+                df_test[col].values.tolist())
         train_df.loc[:, col] = lbl.transform(train_df[col].values.tolist())
         valid_df.loc[:, col] = lbl.transform(valid_df[col].values.tolist())
 
-        label_encoders.append((col, lbl))
+        label_encoders[col] = lbl
 
     #data is ready to train
 
